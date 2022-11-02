@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/authentication.js"
 
 import usePosts from "../hooks/usePosts";
 import getPublishedDate from "../utils/getPublishedDate";
@@ -11,6 +12,8 @@ function HomePage() {
   const [keywords, setKeywords] = useState("");
   const { posts, totalPages, getPosts, deletePost, isError, isLoading } =
     usePosts();
+
+  const { logout } = useAuth();
 
   console.log(totalPages);
 
@@ -29,6 +32,9 @@ function HomePage() {
         >
           Create Post
         </button>
+        <button onClick={()=>{
+          logout()
+        }}>Logout</button>
       </div>
       <div className="search-box-container">
         <div className="search-box">
@@ -56,6 +62,7 @@ function HomePage() {
               <option disabled value="">
                 -- Select a status --
               </option>
+              <option value="">all</option>
               <option value="published">Published</option>
               <option value="draft">Draft</option>
               <option value="archived">Archived</option>
